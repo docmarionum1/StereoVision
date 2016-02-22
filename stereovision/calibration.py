@@ -228,6 +228,7 @@ class StereoCalibrator(object):
          calib.f_mat) = cv2.stereoCalibrate(self.object_points,
                                             self.image_points["left"],
                                             self.image_points["right"],
+                                            None,None,None,None,
                                             self.image_size,
                                             criteria=criteria,
                                             flags=flags)[1:]

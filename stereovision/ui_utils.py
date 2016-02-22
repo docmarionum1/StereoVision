@@ -191,7 +191,7 @@ class BMTuner(object):
         """
         disparity = self.block_matcher.get_disparity(self.pair)
         norm_coeff = 255 / disparity.max()
-        cv2.imshow(self.window_name, disparity * norm_coeff / 255)
+        cv2.imshow(self.window_name + " disp", disparity * norm_coeff / 255)
         cv2.waitKey()
 
     def tune_pair(self, pair):
