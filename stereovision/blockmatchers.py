@@ -81,12 +81,12 @@ class BlockMatcher(object):
 
     def load_settings(self, settings):
         """Load settings from file"""
-        if type(settings) == 'dict':
+        if type(settings) == dict:
             settings_dict = settings
         else:
             with open(settings) as settings_file:
                 settings_dict = simplejson.load(settings_file)
-                
+
         for key, value in settings_dict.items():
             self.__setattr__(key, value)
 
