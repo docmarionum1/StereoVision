@@ -171,9 +171,9 @@ class StereoBM(BlockMatcher):
 
     def _replace_bm(self):
         """Replace ``_block_matcher`` with current values."""
-        self._block_matcher = cv2.StereoBM(preset=self._bm_preset,
-                                          ndisparities=self._search_range,
-                                          SADWindowSize=self._window_size)
+        self._block_matcher = cv2.StereoBM_create(
+                                          numDisparities=self._search_range,
+                                          blockSize=self._window_size)
 
     def __init__(self,
                  search_range=80,
@@ -203,8 +203,7 @@ class StereoBM(BlockMatcher):
                 gray.append(cv2.cvtColor(side, cv2.COLOR_BGR2GRAY))
         else:
             gray = pair
-        return self._block_matcher.compute(gray[0], gray[1],
-                                          disptype=cv2.CV_32F)
+        return self._block_matcher.compute(gray[0], gray[1])
 
 
 class StereoSGBM(BlockMatcher):
@@ -272,11 +271,11 @@ class StereoSGBM(BlockMatcher):
     @uniquenessRatio.setter
     def uniquenessRatio(self, value):
         """Set private ``_uniqueness`` and reset ``_block_matcher``."""
-        if value >= 5 and value <= 15:
+        if value >= 0 and value <= 15:
             self._uniqueness = value
         else:
             raise InvalidUniquenessRatioError("Uniqueness ratio must be "
-                                              "between 5 and 15.")
+                                              "between 0 and 15.")
         self._replace_bm()
 
     @property
