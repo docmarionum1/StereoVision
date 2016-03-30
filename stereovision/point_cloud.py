@@ -68,7 +68,7 @@ end_header
 
     def filter_infinity(self):
         """Filter infinite distances from ``PointCloud.``"""
-        mask = self.coordinates[:, 2] > self.coordinates[:, 2].min()
+        mask = (self.coordinates[:, 2] > self.coordinates[:, 2].min())# & (self.coordinates[:, 2] < self.coordinates[:, 2].max())
         coords = self.coordinates[mask]
         colors = self.colors[mask]
         return PointCloud(coords, colors)

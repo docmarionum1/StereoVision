@@ -99,7 +99,7 @@ def calibrate_folder(args):
     progress.start()
     while args.input_files:
         left, right = args.input_files[:2]
-        print left, right
+        print(left, right)
         img_left, im_right = cv2.imread(left), cv2.imread(right)
         calibrator.add_corners((img_left, im_right),
                                show_results=args.show_chessboards)

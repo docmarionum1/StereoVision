@@ -153,7 +153,7 @@ class StereoCalibrator(object):
                                                  (self.rows, self.columns))
         if not ret:
             raise ChessboardNotFoundError("No chessboard could be found.")
-        cv2.cornerSubPix(temp, corners, (11, 11), (-1, -1),
+        corners = cv2.cornerSubPix(temp, corners, (11, 11), (-1, -1),
                          (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS,
                           30, 0.01))
         return corners
@@ -219,7 +219,7 @@ class StereoCalibrator(object):
         """Calibrate cameras based on found chessboard corners."""
         criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS,
                     100, 1e-5)
-        flags = (cv2.CALIB_FIX_ASPECT_RATIO + cv2.CALIB_ZERO_TANGENT_DIST +
+        flags = (cv2.CALIB_FIX_ASPECT_RATIO + #cv2.CALIB_ZERO_TANGENT_DIST +
                  cv2.CALIB_SAME_FOCAL_LENGTH)
         calib = StereoCalibration()
         (calib.cam_mats["left"], calib.dist_coefs["left"],
@@ -241,8 +241,8 @@ class StereoCalibrator(object):
                                                       calib.dist_coefs["right"],
                                                       self.image_size,
                                                       calib.rot_mat,
-                                                      calib.trans_vec,
-                                                      flags=0)
+                                                      calib.trans_vec)#,
+                                                      #flags=0)
         for side in ("left", "right"):
             (calib.undistortion_map[side],
              calib.rectification_map[side]) = cv2.initUndistortRectifyMap(
