@@ -61,14 +61,14 @@ end_header
     def write_ply(self, output_file):
         """Export ``PointCloud`` to PLY file for viewing in MeshLab."""
         points = np.hstack([self.coordinates, self.colors])
-        with open(output_file, 'w') as outfile:
-            outfile.write(self.ply_header.format(
-                                            vertex_count=len(self.coordinates)))
-            np.savetxt(outfile, points, '%f %f %f %d %d %d')
+        np.savetxt(
+            output_file, points, '%f %f %f %d %d %d', comments='',
+            header=self.ply_header.format(vertex_count=len(self.coordinates))
+        )
 
     def filter_infinity(self):
         """Filter infinite distances from ``PointCloud.``"""
-        mask = (self.coordinates[:, 2] > self.coordinates[:, 2].min())# & (self.coordinates[:, 2] < self.coordinates[:, 2].max())
+        mask = (self.coordinates[:, 2] > self.coordinates[:, 2].min()) & (self.coordinates[:, 2] < self.coordinates[:, 2].max())
         coords = self.coordinates[mask]
         colors = self.colors[mask]
         return PointCloud(coords, colors)

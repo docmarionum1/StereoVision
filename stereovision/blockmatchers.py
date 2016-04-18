@@ -148,7 +148,7 @@ class StereoBM(BlockMatcher):
             self._window_size = value
         else:
             raise InvalidWindowSizeError("Window size must be an odd number "
-                                      "between 0 and {}.".format(
+                                      "between 5 and {}.".format(
                                       self.parameter_maxima["window_size"] + 1))
         self._replace_bm()
 
